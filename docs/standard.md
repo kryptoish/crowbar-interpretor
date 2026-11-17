@@ -54,4 +54,40 @@ Output: `> (a.b)/(a,b)>c`
 
 TODO: (some type of method to make modules/funcs/templates and more) (also start writing example code to flesh out edge cases and details for syntax before implementation) ...
 
+### Example: Output 'H' (Still being tuned/changed)
+
+```c
+// Add clock output
+#define clock as clk;
+
+// not gate
+n { a -> b:
+  a/a>b;
+}
+
+// half adder
+ha { a,b -> s,c:
+  [n(a->o1).n(b->o2)],[a.b]/[n(a->o3),n(b->o4)].[a,b]>s; // -> represents xor gate
+  n(a->o5),n(b->o6)/a.b>c; // -> represents and gate
+} // Note: o# are temp intermediate wires
+
+// incrementor
+#define data1 as out;
+8-i ( // -> like a loop generate (from Verilog)
+  ha(ai,bi -> si,a|i+1|);
+  si>outi; // -> put in data node (1)
+)
+
+64[>]; // 64 clk ticks + 8 done in gen above
+
+out>I; // output flag (I = stdout)
+```
+
+Output:
+
+```sh
+~$ cb-exec ./print-H.
+H
+```
+
 More info on the language (once completed) will exist on <https://esolangs.org/wiki/CMOS>
