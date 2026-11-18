@@ -24,7 +24,7 @@ Maybe we will, need some sort of CMOS netlist generator of sorts to translate ta
 
 #### Timing
 
-Timing is important in digital systems, and it will be here too. One tick in .bf is every single character that you input, one by one. Here a "tick" will be such: everytime we reach the output result for a gate pattern, the pin will be "sampled" in such where the output will be calculated using the logic of your previous gates, whatever that may be and continue from there to the next list, the value being saved on that output.
+Timing is important in digital systems, and it will be here too. One tick in .bf is every single '>' that you input, one by one. Here a "tick" will be such: everytime we reach the output result for a gate pattern, the pin will be "sampled" in such where the output will be calculated using the logic of your previous gates, whatever that may be and continue from there to the next list, the value being saved on that output.
 
 #### Nets
 
@@ -42,6 +42,8 @@ TODO: Use proper grammar format: <https://www.cs.cmu.edu/~pattis/misc/ebnf2.pdf>
 
 #### Syntax
 
+##### Simple CMOS syntax
+
 Series: `. (a.b)`
 
 Parallel: `, (a,b)`
@@ -50,9 +52,33 @@ Separate pull-up to pull-down: `/ (a.b)/(a,b)`
 
 Output: `> (a.b)/(a,b)>c`
 
+NAND gate from above syntax |`(a.b)/(a,b)>c;`| :
+
 <img width="310" height="505" alt="image" src="https://github.com/user-attachments/assets/4f2f8b9f-0948-4910-b957-8c10dc406981" />
 
-TODO: (some type of method to make modules/funcs/templates and more) (also start writing example code to flesh out edge cases and details for syntax before implementation) ...
+##### Advanced CMOS syntax (inspired slightly by C and SV)
+
+A clock (wire that flips every tick) or data node:
+
+```
+#define clock
+#define data(#)
+```
+
+Functions (or nets): `<func_name>{<input> -> <output>: net;}`
+
+Multi-net generate: `#-i( net;)`
+
+- `<wire_name>|i|` <- this can be an expression with constant
+
+Loop/repeat ticks clock: `#[>]`
+
+Existing flags:
+
+- `I //stdout`
+- TBA
+
+TODO: add more as you go
 
 ### Example: Output 'H' (Still being tuned/changed)
 
@@ -86,8 +112,10 @@ out>I; // output flag (I = stdout)
 Output:
 
 ```sh
-~$ cb-exec ./print-H.
+~$ cb-exec ./print-H.cb
 H
 ```
 
 More info on the language (once completed) will exist on <https://esolangs.org/wiki/CMOS>
+
+TODO: more ideation for design & syntax/grammar otherwise start boilerplate and implementation, make a vim highlight file
