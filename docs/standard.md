@@ -118,4 +118,8 @@ H
 
 More info on the language (once completed) will exist on <https://esolangs.org/wiki/CMOS>
 
-TODO: more ideation for design & syntax/grammar otherwise start boilerplate and implementation, make a vim highlight file
+TODO: more ideation for design & syntax/grammar otherwise start boilerplate and implementation, make a vim highlight file:
+
+<https://github.com/zenoamaro/rust-brainfuck/tree/master>
+
+<https://www.youtube.com/watch?v=A3gTw1ZkeK0>
